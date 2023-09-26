@@ -14,6 +14,13 @@
         android:text="This is SubActivity"
         android:textSize="30sp"/>
 
+    <TextView
+        android:id="@+id/tv_random"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="30sp"/>
+
     <Button
         android:id="@+id/btn_subMove"
         android:layout_width="wrap_content"

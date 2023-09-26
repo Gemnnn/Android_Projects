@@ -11,12 +11,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_move;
     private EditText et_test;
     private String str;
     ImageView test;
+
+    private int random_number;
+
+    private String random;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +39,15 @@ public class MainActivity extends AppCompatActivity {
         btn_move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str = et_test.getText().toString();
+                str = String.valueOf(et_test.getText());
+                random_number = new Random().nextInt(1000);
+//                random_number = 888;
+
+
+
                 Intent intent = new Intent(MainActivity.this, SubActivity.class);
                 intent.putExtra("str", str);
+                intent.putExtra("num", random_number);
                 startActivity(intent); // Move Activity
             }
         });
