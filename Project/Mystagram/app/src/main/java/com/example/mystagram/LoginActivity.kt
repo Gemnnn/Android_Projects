@@ -29,26 +29,26 @@ class LoginActivity : AppCompatActivity() {
         et_password = findViewById(R.id.et_password)
 
         btn_login.setOnClickListener {
-            signinAndSignup()
+//            signinAndSignup()
         }
     }
 
     fun signinAndSignup(){
         auth?.createUserWithEmailAndPassword(et_email.text.toString(), et_password.text.toString())
             ?.addOnCompleteListener{
-                task ->
-                    if(task.isSuccessful){
-                        // Createing a user account
-                        moveMainPage(task.result.user)
-                    }
-                    else if(!task.exception?.message.isNullOrEmpty()){
-                        // Catch an error
-                        Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
-                    }
-                    else{
-                        // Login, if the user has an account
-                        signinEmail()
-                    }
+                    task ->
+                if(task.isSuccessful){
+                    // Createing a user account
+                    moveMainPage(task.result.user)
+                }
+                else if(!task.exception?.message.isNullOrEmpty()){
+                    // Catch an error
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    // Login, if the user has an account
+                    signinEmail()
+                }
             }
     }
 
