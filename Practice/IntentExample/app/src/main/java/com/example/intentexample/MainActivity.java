@@ -24,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private String random;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

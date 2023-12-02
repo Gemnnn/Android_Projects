@@ -27,7 +27,6 @@ public class SubActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-//        String str = intent.getStringExtra("str");
         String str = intent.getStringExtra("str");
         int num = intent.getIntExtra("num", 0);
 
