@@ -13,19 +13,23 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.InputNumberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>
