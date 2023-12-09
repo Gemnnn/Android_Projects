@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:gravity="bottom"
+    android:padding="16dp"
+    android:paddingTop="20dp"
+    android:background="@color/emerald"
+    android:theme="@style/Base.Theme.MiniGames">
+
+    <ImageView
+        android:layout_width="126dp"
+        android:layout_height="116dp"
+        android:src="@drawable/minilogo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BM Mini Games"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brandenmin@gmail.com"
+        android:textSize="14sp"/>
+
+
+</LinearLayout>
