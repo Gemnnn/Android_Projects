@@ -16,6 +16,7 @@ The 'Project' folder is where the actual project works are stored. This is where
 
 #### Projects in Project
 
+- [MiniGames]: A mini-game application that allows user to enjoy several simple games
 - [Mystagram]: social media similar to Instagram
 
 Feel free to explore each sub-project and its respective folders for more details.
