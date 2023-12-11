@@ -1,59 +1,75 @@
 package com.example.minigames
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.minigames.viewmodel.MemoryGameViewModel
+import com.example.minigames.viewmodel.SetupViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [GameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private val setupViewModel: SetupViewModel by activityViewModels()
+
+    private val memoryGameViewModel: MemoryGameViewModel by activityViewModels()
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_game, container, false)
+
+        val startButton = view.findViewById<Button>(R.id.startButton)
+        startButton.setOnClickListener {
+            if (validateInput()) {
+                navigateToMemoryGame()
+            }
+        }
+
+        return view
+    }
+
+    private fun validateInput(): Boolean {
+        val playerNameEditText = view?.findViewById<EditText>(R.id.playerNameEditText)
+        val playerName = playerNameEditText?.text.toString().trim()
+
+        if (playerName.isBlank()) {
+            Toast.makeText(context, "Please enter your name", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val radioGroup = view?.findViewById<RadioGroup>(R.id.radioGroup)
+        val selectedModeId = radioGroup?.checkedRadioButtonId ?: -1
+        if (selectedModeId == -1) {
+            Toast.makeText(context, "Please select a game mode", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        setupViewModel.setPlayerName(playerName)
+        setupViewModel.setGameDifficulty(getSelectedDifficulty(selectedModeId))
+
+        return true
+    }
+
+    private fun getSelectedDifficulty(selectedModeId: Int): String {
+        return when (selectedModeId) {
+            R.id.normalModeButton -> "Normal"
+            R.id.hardModeButton -> "Hard"
+            else -> "Normal" // Default to normal if somehow no button is selected
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false)
-    }
+    private fun navigateToMemoryGame() {
+        val memoryGameFragment = MemoryGameFragment()
+        val bundle = Bundle()
+        bundle.putString("playerName", setupViewModel.playerName.value)
+        bundle.putString("gameMode", setupViewModel.gameDifficulty.value)
+        memoryGameFragment.arguments = bundle
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GameFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GameFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, memoryGameFragment)?.commit()
     }
 }

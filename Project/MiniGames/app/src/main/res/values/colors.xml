@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="emerald">#88F1A9</color>
+    <color name="yellow">#E3CE5E</color>
+    <color name="tile_default">#FFC107</color>
 </resources>
