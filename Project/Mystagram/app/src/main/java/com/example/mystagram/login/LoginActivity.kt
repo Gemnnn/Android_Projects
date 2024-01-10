@@ -76,5 +76,6 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.firebaseAuthWithGoogle(account.idToken)
     }
+
     
 }
