@@ -11,11 +11,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mystagram.R
+import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -63,6 +65,19 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun firebaseAuthWithGoogle(idToken : String?){
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential).addOnCompleteListener() {
+            if(it.isSuccessful){
+                showInputNumberActivity.value = true
+
+            }
+            else{
+
+            }
+        }
+    }
+
+    fun firebaseAuthWithFacebook(accessToken : AccessToken){
+        val credential = FacebookAuthProvider.getCredential(accessToken.token)
         auth.signInWithCredential(credential).addOnCompleteListener() {
             if(it.isSuccessful){
                 showInputNumberActivity.value = true
