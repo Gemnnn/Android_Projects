@@ -1,1 +1,4 @@
 /build
+
+# Secret
+/src/main/res/values/strings.xml
