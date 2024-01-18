@@ -34,6 +34,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     var googleSignInClient : GoogleSignInClient
 
+    var showMainActivity : MutableLiveData<Boolean> = MutableLiveData(false)
+
     init {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(context.getString(R.string.default_web_client_id))
@@ -49,10 +51,21 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         auth.createUserWithEmailAndPassword(id.value.toString(), password.value.toString()).addOnCompleteListener {
             if(it.isSuccessful){
                 showInputNumberActivity.value = true
-
             }
             else{
+                loginEmail()
+            }
+        }
+    }
 
+    fun loginEmail(){
+        auth.signInWithEmailAndPassword(id.value.toString(), password.value.toString()).addOnCompleteListener {
+            if(it.isSuccessful){
+                if(it.result.user?.isEmailVerified == true){
+                    showMainActivity.value = true
+                }else {
+                    showInputNumberActivity.value = true
+                }
             }
         }
     }
@@ -67,11 +80,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener() {
             if(it.isSuccessful){
-                showInputNumberActivity.value = true
-
-            }
-            else{
-
+                if(it.result.user?.isEmailVerified == true){
+                    showMainActivity.value = true
+                }else {
+                    showInputNumberActivity.value = true
+                }
             }
         }
     }
@@ -80,11 +93,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         val credential = FacebookAuthProvider.getCredential(accessToken.token)
         auth.signInWithCredential(credential).addOnCompleteListener() {
             if(it.isSuccessful){
-                showInputNumberActivity.value = true
-
-            }
-            else{
-
+                if(it.result.user?.isEmailVerified == true){
+                    showMainActivity.value = true
+                }else {
+                    showInputNumberActivity.value = true
+                }
             }
         }
     }
